@@ -1,9 +1,20 @@
-function App() {
-  return (
-    <div>
-      <h1 className="text-2xl font-bold ml-5">Test</h1>
-    </div>
-  );
-}
+import { Navigate, Routes, Route } from "react-router";
+import { Assets } from "./Assets";
+import { DataContextProvider } from "./DataContext";
+import { Markets } from "./Markets";
 
-export default App;
+export function App() {
+
+    return (
+        <div>
+            <Routes >
+                    <Route path='/markets' element={<DataContextProvider><Markets /></DataContextProvider>} />
+                    <Route path='/assets' element={<DataContextProvider><Assets /></DataContextProvider>} />
+                    <Route
+                        path="*"
+                        element={<Navigate to="/assets" replace />}
+                    />
+            </Routes>
+        </div>
+    )
+}
