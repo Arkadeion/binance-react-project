@@ -69,7 +69,7 @@ export function Markets() {
 
     } else {
 
-      const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp(searchInput, 'i')))
+      const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp('^' + searchInput + '$', 'i')))
 
       data.setDataArray([...filteredList]);
     }
