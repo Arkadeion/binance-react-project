@@ -1,17 +1,36 @@
-import { useFetchApi } from "./useFetchApi";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AssetsComponent } from "./AssetsComponent";
+import { DataContext } from "./DataContext";
 
 export function Assets() {
 
-  const { data, error, isLoading, logData } = useFetchApi();
+  const data = useContext(DataContext);
 
   return (
     <div>
-      <div className="bg-white rounded-xl border-2 border-black max-w-fit p-4 mb-8">
-        {isLoading && <h1 className="text-xl font-bold" >Loading...</h1>}
-        {error && <h1 className="text-xl font-bold" >{error.message}</h1>}
-        {!error && data && <h1 className="text-xl font-bold" >{data.serverTime !== null ? `${data.serverTime} momento` : `Bruh`}</h1>}
+      <div>
+        <Link to={`/markets`}>Markets</Link>
       </div>
-      <button className="rounded-xl border-black border-2 p-1 mr-3" onClick={logData} >Refresh User Data</button>
+      <div className="bg-white rounded-xl border-2 border-black max-w-fit p-4 mb-8">
+        {data.isLoadingAssets && <h1 className="text-xl font-bold" >Loading...</h1>}
+        {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
+        {!data.error && data.assetsArray && <h1 className="text-xl font-bold" >{
+          <table>
+            <thead>
+              <tr>
+                <th>Base Asset</th>
+                <th># of Markets</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.assetsArray.map((asset) => {
+                return <AssetsComponent {...asset} key={asset.id} />
+              })}
+            </tbody>
+          </table>
+        }</h1>}
+      </div>
     </div>
   );
 }

@@ -21,6 +21,8 @@ export function useFetchApi() {
         }
 
         setDataArray(JSON.parse(sessionStorage.getItem('data')));
+        setAssetsArray(JSON.parse(sessionStorage.getItem('assets')));
+        
 
     }, [])
 
@@ -46,18 +48,6 @@ export function useFetchApi() {
 
         const unique = [...new Set(symbols.map(item => item.baseAsset))];
 
-/*         const mappedArray = priceData.map((ticker, index) => {
-
-            const find = exchangeData.find(name => name.symbol === ticker.symbol);
-
-            return {
-                ...ticker,
-                baseAsset: find.baseAsset,
-                quoteAsset: find.quoteAsset,
-                id: index + 1
-            }
-        }); */
-
         const reducedArray = unique.map((element, index) => {
 
             const count = symbols.filter(name => name.baseAsset === unique[index]).length;
@@ -69,9 +59,8 @@ export function useFetchApi() {
             }
         });
 
-        console.log(reducedArray);
-
-        setAssetsArray();
+        setAssetsArray(reducedArray);
+        sessionStorage.setItem('assets', JSON.stringify(reducedArray));
     }
 
     return ({

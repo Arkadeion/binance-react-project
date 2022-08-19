@@ -2,6 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "./DataContext";
 import DataTable from "react-data-table-component";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+
+/* DataTable settings */
 
 const columns = [
   {
@@ -24,15 +27,21 @@ const columns = [
 
 export function Markets() {
 
+  /* import context */
   const data = useContext(DataContext);
 
+  /* Query parameters fetching */
   const query = useLocation().search;
+
+  /* States  for the filtering and search */
 
   const [searchInput, setSearchInput] = useState('');
 
   const [selectFilter, setSelectFilter] = useState('symbol');
 
   const [queryStatus, setQueryStatus] = useState(false);
+
+  /* Event handlers */
 
   function handleInput(event) {
     setSearchInput(event.target.value);
@@ -99,6 +108,8 @@ export function Markets() {
     }
   }
 
+  /* Use Effects for query parameters */
+
   useEffect(() => {
     handleQuery();
     setQueryStatus(true);
@@ -110,6 +121,9 @@ export function Markets() {
 
   return (
     <div>
+      <div>
+        <Link to={`/assets`}>Assets</Link>
+      </div>
       <div className="flex mb-5 justify-between bg-white rounded-xl border-2 border-black w-3/5 p-4 mt-8 mb-8">
         <select className="border-black border-2 mr-2" onChange={orderTable}>
           <option>Order by Name</option>
