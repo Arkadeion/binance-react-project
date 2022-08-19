@@ -130,7 +130,6 @@ export function Markets() {
       <div className="bg-white rounded-xl border-2 border-black w-3/5 p-4 mb-8">
         {data.isLoadingMarkets && <h1 className="text-3xl font-bold" >Loading...</h1>}
         {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
-        {/* {!data.error && data.dataArray && <ul>{data.dataArray.map((symbol) => <li key={symbol.id}>Market: {symbol.symbol} --- Price: {symbol.price} --- Base Asset: {symbol.baseAsset} --- Quote Asset: {symbol.quoteAsset} --- ID: {symbol.id}</li>)}</ul>} */}
         {!data.error && data.dataArray &&
           <div>
             <DataTable pagination={true} paginationPerPage='30'
