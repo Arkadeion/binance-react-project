@@ -30,7 +30,7 @@ export function Assets() {
 
   return (
     <div>
-      <div>
+      <div className="mt-5 mb-8" >
         <Link to={`/markets`}>Markets</Link>
       </div>
       <div className="bg-white rounded-xl border-2 border-black max-w-fit p-4 mb-8">

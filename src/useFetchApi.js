@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 
 export function useFetchApi() {
 
+    /* States */
 
     const [dataArray, setDataArray] = useState(null);
 
     const [assetsArray, setAssetsArray] = useState(null);
+
+    const [error, setError] = useState(null);
+
+    /* Fetcher function + setting states */
 
     useEffect(() => {
 
@@ -18,6 +23,7 @@ export function useFetchApi() {
                 filteredArray(exchangeResponse.symbols);
                 mapArray(priceResponse, exchangeResponse.symbols);
             })
+            .catch((err) => {setError(err)});
         }
 
         setDataArray(JSON.parse(sessionStorage.getItem('data')));
@@ -25,6 +31,8 @@ export function useFetchApi() {
         
 
     }, [])
+
+    /* Generation of the arrays of objects required for the tables */
 
     function mapArray(priceData, exchangeData) {
 
@@ -67,8 +75,8 @@ export function useFetchApi() {
         dataArray: dataArray,
         assetsArray: assetsArray,
         setAssetsArray: setAssetsArray,
-        isLoadingMarkets: !dataArray,
-        isLoadingAssets: !assetsArray,
+        isLoadingMarkets: !dataArray && !error,
+        isLoadingAssets: !assetsArray && !error,
         setDataArray: setDataArray,
     })
 }

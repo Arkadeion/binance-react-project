@@ -69,9 +69,19 @@ export function Markets() {
 
     } else {
 
-      const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp('^' + searchInput + '$', 'i')))
+      if (selectFilter === 'symbol') {
 
-      data.setDataArray([...filteredList]);
+        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp(searchInput, 'i')))
+
+        data.setDataArray([...filteredList]);
+
+      } else {
+
+        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp('^' + searchInput + '$', 'i')))
+
+        data.setDataArray([...filteredList]);
+
+      }
     }
   }
 
