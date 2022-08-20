@@ -2,26 +2,47 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "./DataContext";
 import DataTable from "react-data-table-component";
 import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
+import { Nav } from "./Nav";
 
 /* DataTable settings */
+
+const MarketsComponent = row => (
+  <div className="inline-block px-8 py-3 text-sm font-medium text-indigo-600">{row.symbol}</div>
+);
+
+const BaseAssetComponent = row => (
+  <div className="inline-block px-8 py-3 text-sm font-medium text-indigo-600">{row.baseAsset}</div>
+);
+
+const QuoteAssetComponent = row => (
+  <div className="inline-block px-8 py-3 text-sm font-medium text-indigo-600">{row.quoteAsset}</div>
+);
+
+const PriceComponent = row => (
+  <div className="inline-block px-8 py-3 text-sm font-medium text-indigo-600">${row.price}</div>
+);
+
 
 const columns = [
   {
     name: 'Market',
-    selector: row => row.symbol
+    selector: row => row.symbol,
+    cell: MarketsComponent
   },
   {
     name: 'Base Asset',
-    selector: row => row.baseAsset
+    selector: row => row.baseAsset,
+    cell: BaseAssetComponent
   },
   {
     name: 'Quote Asset',
-    selector: row => row.quoteAsset
+    selector: row => row.quoteAsset,
+    cell: QuoteAssetComponent
   },
   {
     name: 'Price',
-    selector: row => '$' + row.price
+    selector: row => row.price,
+    cell: PriceComponent
   }
 ]
 
@@ -131,24 +152,24 @@ export function Markets() {
 
   return (
     <div>
-      <div>
-        <Link to={`/assets`}>Assets</Link>
-      </div>
-      <div className="flex mb-5 justify-between bg-white rounded-xl border-2 border-black w-3/5 p-4 mt-8 mb-8">
-        <select className="border-black border-2 mr-2" onChange={orderTable}>
-          <option>Order by Name</option>
-          <option value="ascending">Ascending</option>
-          <option value="descending" >Descending</option>
-        </select>
+      <Nav />
+      <div className="flex mb-5 justify-between align-content: center bg-white rounded-xl border-2 border-black w-3/5 p-4 mt-8 mb-8">
+        <div className="pt-4 pb-4">
+          <select className="border bg-white border-indigo-500 rounded text-indigo-600" onChange={orderTable}>
+            <option value="default" >Default Order</option>
+            <option value="ascending">Ascending</option>
+            <option value="descending" >Descending</option>
+          </select>
+        </div>
         <div>
-          <select className="border-black border-2 mr-2" value={selectFilter} onChange={handleSelect}>
+          <select className="border bg-white border-indigo-500 rounded text-indigo-600" value={selectFilter} onChange={handleSelect}>
             <option value="symbol">Market</option>
             <option value="baseAsset" >Base Asset</option>
             <option value="quoteAsset" >Quote Asset</option>
           </select>
-          <input className="border-black border-2 mr-2" value={searchInput} onChange={handleInput} />
-          <button className="border-black border-2 mr-2" onClick={handleFilter} >Search</button>
-          <button className="border-black border-2 mr-2" onClick={handleReset} >Reset</button>
+          <input className="w-full p-3 mt-1 mb-1 text-sm border border-indigo-500 rounded" value={searchInput} onChange={handleInput} />
+          <button className="inline-block px-4 py-2 mr-3 text-sm font-medium text-indigo-600 transition border border-current rounded active:text-indigo-500 focus:outline-none focus:ring" onClick={handleFilter} >Search</button>
+          <button className="inline-block px-4 py-2 text-sm font-medium text-indigo-600 transition border border-current rounded active:text-indigo-500 focus:outline-none focus:ring" onClick={handleReset} >Reset</button>
         </div>
       </div>
       <div className="bg-white rounded-xl border-2 border-black w-3/5 p-4 mb-8">
@@ -156,7 +177,7 @@ export function Markets() {
         {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
         {!data.error && data.dataArray &&
           <div>
-            <DataTable pagination={true} paginationPerPage='30'
+            <DataTable
               columns={columns}
               data={data.dataArray} />
           </div>
@@ -165,3 +186,4 @@ export function Markets() {
     </div>
   );
 }
+
