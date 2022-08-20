@@ -14,6 +14,30 @@ const MarketsComponent = row => (
   <div className="inline-block px-8 py-3 text-sm font-medium text-indigo-600 transition">{row.numberOfMarkets}</div>
 );
 
+const customStyles = {
+  headRow: {
+    style: {
+      backgroundColor: "white",
+      minHeight: '52px',
+      borderBottomWidth: '1px',
+      borderBottomColor: "#4F46E5",
+      borderBottomStyle: 'solid',
+      fontSize: "1rem",
+      color: "#4F46E5",
+      paddingLeft: "2.5rem",
+    },
+  },
+  rows: {
+    style: {
+      '&:not(:last-of-type)': {
+        borderBottomStyle: 'dotted',
+        borderBottomWidth: '1px',
+        borderBottomColor: "#4F46E5",
+      },
+    },
+  },
+}
+
 const columns = [
   {
     name: 'Base Asset',
@@ -35,17 +59,20 @@ export function Assets() {
   const data = useContext(DataContext);
 
   return (
-    <div className="flex mb-5 justify-evenly" >
+    <div className="flex mb-5 w-3/5 justify-center" >
       <div>
-        <Nav />
-        <div className="flex mb-5 justify-between align-content: center bg-white rounded-xl border-2 border-indigo-500 w-3/5 p-4 mt-8 mb-8" >
+        <div className="flex justify-center">
+          <Nav />
+        </div>
+        <div className="flex justify-center mb-5 bg-white rounded-xl border-2 border-black max-w-fit p-4 mt-8 mb-8" >
           {data.isLoadingAssets && <h1 className="text-xl font-bold" >Loading...</h1>}
           {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
           {!data.error && data.assetsArray && <div className="text-xl font-bold" >{
             <div>
               <DataTable pagination={true} paginationPerPage='30'
                 columns={columns}
-                data={data.assetsArray} />
+                data={data.assetsArray}
+                customStyles={customStyles} />
             </div>
           }</div>}
         </div>
