@@ -61,6 +61,16 @@ const customStyles = {
       borderTopColor: "#4F46E5",
     },
   },
+  noData: {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: "#4F46E5",
+      backgroundColor: "#F1F5F9",
+      fontSize: "1rem",
+    },
+  },
 }
 
 const columns = [
