@@ -16,10 +16,10 @@ const MarketsComponent = row => (
 
 const customStyles = {
   table: {
-		style: {
-			backgroundColor: "#F1F5F9",
-		},
-	},
+    style: {
+      backgroundColor: "#F1F5F9",
+    },
+  },
   headRow: {
     style: {
       backgroundColor: "#F1F5F9",
@@ -34,7 +34,7 @@ const customStyles = {
   rows: {
     style: {
       backgroundColor: "#F1F5F9",
-      
+
       '&:not(:last-of-type)': {
         borderBottomStyle: 'dotted',
         borderBottomWidth: '1px',
@@ -43,16 +43,16 @@ const customStyles = {
     },
   },
   pagination: {
-		style: {
-			color: "#4F46E5",
-			fontSize: '11px',
-			minHeight: '56px',
-			backgroundColor: "#F1F5F9",
-			borderTopStyle: 'solid',
-			borderTopWidth: '1px',
-			borderTopColor: "#4F46E5",
-		},
-	},
+    style: {
+      color: "#4F46E5",
+      fontSize: '11px',
+      minHeight: '56px',
+      backgroundColor: "#F1F5F9",
+      borderTopStyle: 'solid',
+      borderTopWidth: '1px',
+      borderTopColor: "#4F46E5",
+    },
+  },
 }
 
 const columns = [
@@ -81,9 +81,11 @@ export function Assets() {
         <div className="flex justify-center">
           <Nav />
         </div>
-        <div className="flex justify-center bg-slate-100 mb-5 rounded-xl border-2 border-black max-w-fit p-4 mt-8 mb-8" >
-          {data.isLoadingAssets && <h1 className="text-xl font-bold" >Loading...</h1>}
-          {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
+        <div className="flex justify-center bg-slate-100 mb-5 rounded-xl border-2 border-black p-4 mt-8 mb-8" >
+          <div className="bg-slate-100 flex justify-center" >
+            {data.isLoadingAssets && <h1 className="text-xl font-bold" >Loading...</h1>}
+            {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
+          </div>
           {!data.error && data.assetsArray && <div className="text-xl font-bold" >{
             <div>
               <DataTable pagination={true} paginationPerPage='30'

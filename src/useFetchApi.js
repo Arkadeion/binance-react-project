@@ -4,15 +4,21 @@ export function useFetchApi() {
 
     /* States */
 
-    const [dataArray, setDataArray] = useState(null);
+    const [dataArray, setDataArray] = useState([]);
 
-    const [assetsArray, setAssetsArray] = useState(null);
+    const [assetsArray, setAssetsArray] = useState([]);
 
     const [error, setError] = useState(null);
 
     /* Fetcher function + setting states */
 
     useEffect(() => {
+
+        fetchBinance();
+
+    }, [])
+
+    function fetchBinance() {
 
         if (!JSON.parse(sessionStorage.getItem('data')) || !JSON.parse(sessionStorage.getItem('assets'))) {
 
@@ -23,14 +29,20 @@ export function useFetchApi() {
                 filteredArray(exchangeResponse.symbols);
                 mapArray(priceResponse, exchangeResponse.symbols);
             })
-            .catch((err) => {setError(err)});
+                .catch((err) => { setError(err) });
         }
 
         setDataArray(JSON.parse(sessionStorage.getItem('data')));
         setAssetsArray(JSON.parse(sessionStorage.getItem('assets')));
-        
 
-    }, [])
+    }
+
+    function refreshData() {
+
+        sessionStorage.clear();
+        fetchBinance();
+
+    }
 
     /* Generation of the arrays of objects required for the tables */
 
@@ -60,7 +72,7 @@ export function useFetchApi() {
 
             const count = symbols.filter(name => name.baseAsset === unique[index]).length;
 
-            return {                
+            return {
                 id: index + 1,
                 baseAsset: element,
                 numberOfMarkets: count,
@@ -78,6 +90,7 @@ export function useFetchApi() {
         isLoadingMarkets: !dataArray && !error,
         isLoadingAssets: !assetsArray && !error,
         setDataArray: setDataArray,
+        refreshData: refreshData,
     })
 }
 

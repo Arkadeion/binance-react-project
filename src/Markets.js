@@ -24,10 +24,10 @@ const PriceComponent = row => (
 
 const customStyles = {
   table: {
-		style: {
-			backgroundColor: "#F1F5F9",
-		},
-	},
+    style: {
+      backgroundColor: "#F1F5F9",
+    },
+  },
   headRow: {
     style: {
       backgroundColor: "#F1F5F9",
@@ -51,16 +51,16 @@ const customStyles = {
     },
   },
   pagination: {
-		style: {
-			color: "#4F46E5",
-			fontSize: '11px',
-			minHeight: '56px',
-			backgroundColor: "#F1F5F9",
-			borderTopStyle: 'solid',
-			borderTopWidth: '1px',
-			borderTopColor: "#4F46E5",
-		},
-	},
+    style: {
+      color: "#4F46E5",
+      fontSize: '11px',
+      minHeight: '56px',
+      backgroundColor: "#F1F5F9",
+      borderTopStyle: 'solid',
+      borderTopWidth: '1px',
+      borderTopColor: "#4F46E5",
+    },
+  },
 }
 
 const columns = [
@@ -132,13 +132,13 @@ export function Markets() {
 
       if (selectFilter === 'symbol') {
 
-        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp(searchInput, 'i')))
+        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp(searchInput, 'ig')))
 
         data.setDataArray([...filteredList]);
 
       } else {
 
-        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp('^' + searchInput + '$', 'i')))
+        const filteredList = listCopy.filter((obj) => obj[selectFilter].match(new RegExp(`^${searchInput}$`, 'ig')))
 
         data.setDataArray([...filteredList]);
 
@@ -217,8 +217,10 @@ export function Markets() {
         </div>
       </div>
       <div className="bg-slate-100 rounded-xl border-2 border-black w-3/5 p-4 mb-8">
-        {data.isLoadingMarkets && <h1 className="text-3xl font-bold" >Loading...</h1>}
-        {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
+        <div className="bg-slate-100 flex justify-center" >
+          {data.isLoadingMarkets && <h1 className="text-3xl font-bold" >Loading...</h1>}
+          {data.error && <h1 className="text-xl font-bold" >{data.error.message}</h1>}
+        </div>
         {!data.error && data.dataArray &&
           <div className="bg-slate-100">
             <DataTable pagination={true} paginationPerPage='30'
